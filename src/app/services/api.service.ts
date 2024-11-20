@@ -34,7 +34,7 @@ export class ApiService {
     const {status, error:{message:errorMessage=null}={}, message } = error;
     console.warn(error)
     // return errorMessage || message;
-    return throwError(errorMessage || message);
+    return throwError(error);
 
     console.log("==============================================================")
     console.log(error)

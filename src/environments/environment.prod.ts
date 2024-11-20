@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://localhost/prod/api',
+    EXCHANGE_RATE_APIKEY: '0000000000000000000000000000',
 };
   

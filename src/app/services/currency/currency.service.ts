@@ -7,15 +7,12 @@ import { CURRENCY_ENDPOINT } from "../../config/endpoints";
 
 @Injectable({
     providedIn: 'root',
-  })
+})
 
 export class CurrencyService {
-    constructor(
-        private apiService: ApiService,
-    ) {}
+    constructor( private apiService: ApiService) {}
 
     convert(payload:IFCurrencyPaload): Observable<IFCurrencyResponse>  {
-        console.log(CURRENCY_ENDPOINT)
         const httpData: HTTP_REQUESST = {
             url:`${CURRENCY_ENDPOINT.convert}/${payload.sourceCurrency}/${payload.targetCurrency}/${payload.amount}`, 
         }

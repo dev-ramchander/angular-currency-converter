@@ -22,6 +22,11 @@ export interface IF_CachedResult {
     response:IFCurrencyResponse,
     lastUpdated:any,
 }
+
+export interface IF_RemoveCache {
+    index:number
+}
+
 export interface CacheItem { key: string; response: any, };
 
 export type CachedData = (IF_CachedResult)[];
