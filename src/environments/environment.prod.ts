@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    EXCHANGE_RATE_APIKEY: '0000000000000000000000000000',
+    EXCHANGE_RATE_APIKEY: '920258a34fe71b3a6830e181',
 };
   
