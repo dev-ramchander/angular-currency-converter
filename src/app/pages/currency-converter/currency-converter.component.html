@@ -1,0 +1,110 @@
+<div class="">
+    <div class="row headerContent">
+        <div class="col-md-8 mx-auto headerTitle text-center">
+            <h2 class="text-uppercase">Currency Converter</h2>
+            <small class="">Check live foreign currency exchange rates</small>
+        </div>
+    </div>
+    <div class="row py-4">
+        @if( isLoading ){
+            <div class="d-flex flex-column justify-content-center align-items-center loader-container" id="loader">
+                <div class="spinner-border cl-indigo" role="status">
+                </div>
+            </div>
+        }
+        <div class="col-md-10 col-sm-10 mx-auto currency-container" [ngClass]="{ 'blur-2': isLoading }">
+            <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+                <div class="row px-0">
+                    <div class="d-flex d-flex justify-content-md-between align-items-bottom gap-1 px-0">
+                        <div class="col-md-3">
+                            <label class="text-uppercase lbl-title font-weight-bold mb-2">Amount</label>
+                            <div class="d-flex">
+                                <div class="me-1">
+                                    <span class="initial-currency-symbol">{{initialCurrencySymbol}}</span>
+                                </div>
+                                <div>
+                                    <input type="text" class="form-control inputAmount" id="floatingInput" formControlName="amount"/>
+                                    <div *ngIf="dataForm.get('amount')?.invalid && dataForm.get('amount')?.touched" class="text-danger">
+                                        <span *ngIf="dataForm.get('amount')?.errors?.['required']">
+                                            Please enter amount.
+                                        </span>
+                                        <span *ngIf="dataForm.get('amount')?.errors?.['pattern']">
+                                            Invalid amount!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-uppercase lbl-title font-weight-bold mb-2">From</label>
+                            <select2 formControlName="sourceCurrency" [data]="currencyOpitonsData" [value]="initialVaue" (update)="handleSourceCurrencyChange($event)"> </select2>
+                        </div>
+                        <div class="col-md-1 text-center align-self-center">
+                            <span class="swap-icon" (click)="handleSwap()">
+                                <fa-icon [icon]="faRightLeft"></fa-icon>
+                            </span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-uppercase lbl-title font-weight-bold mb-2">To</label>
+                            <select2 
+                                formControlName="targetCurrency"
+                                [data]="currencyOpitonsData"
+                                (update)="handleSourceCurrencyChange($event, 'target')"
+                            />
+                            <div *ngIf="dataForm.get('targetCurrency')?.invalid && dataForm.get('targetCurrency')?.touched" class="text-danger">
+                                <span *ngIf="dataForm.get('targetCurrency')?.errors?.['required']">Please enter target Currency.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2 py-4">
+                    <div class="col-md-10">
+                        <div class="row">
+                                <div class="col-md-12">
+                                    @if( responseResult ){
+                                        <div class="result-container ">
+                                            <p class="mb-0">
+                                                <span class="result-currency-from">
+                                                    {{responseResult.amount}} {{responseResult.sourceCurrency}} =</span><span class="result-currency-to"> {{responseResult.convertedAmount}} {{responseResult.targetCurrency}}
+                                                </span>
+                                            </p>
+                                            <p>
+                                                <span class="exchange-rate">
+                                                    1 {{responseResult.sourceCurrency}} = {{responseResult.exchangeRate}} {{responseResult.targetCurrency}}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row mt-1">
+                                        <div class="col-md-8 disclaimer-container">
+                                            <div class="row">
+                                                <div class="col-md-1 align-self-center">
+                                                    <div class="disclaimer-icon-container">
+                                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle-info" class="svg-inline--fa fa-circle-info fa-2x font-awes-icon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                            <path fill="currentColor" d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <div class="disclaimer-text-container"><span>We use third party resources &amp; the mid-market rate for our Converter. This is for informational purposes only. We don't claim this is exact exchange rate.</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <button [disabled]="isLoading" type="submit" class="btn-convert btn btn-outline-primary text-uppercase text-right">
+                            <span>Convert</span>
+                            <div *ngIf="this.isLoading" class="spinner-border spinner-border-sm ms-2" role="status">
+                            </div>
+                        </button>
+                    </div>
+                </div>     
+            </form>
+        </div>
+    </div>
+</div>
